@@ -2,7 +2,7 @@
 
 Akira is an operating-system architecture for agile specialization. Modular components stay in place. How they are grouped, how a call crosses a group, and how strong that boundary is are set in a configuration file and compiled into the image, instead of being fixed in the components.
 
-The architecture is described in *Akira: Towards Operating System Architecture for Agile Specialization* (Jiang et al., ACM Transactions on Embedded Computing Systems, 2026). It separates three jobs that existing modular systems leave tangled:
+The architecture is described in *Akira: Towards Operating System Architecture for Agile Specialization* .It separates three jobs that existing modular systems leave tangled:
 
 | Unit | What the paper assigns to it | Where this tree does that job |
 | --- | --- | --- |
