@@ -1,0 +1,16 @@
+31:--- 1-hop (e2e=318, fabric_gates=1, dfs_visits/chain=2) ---
+41:--- 2-hop (e2e=661, fabric_gates=2, dfs_visits/chain=4) ---
+51:--- 3-hop (e2e=1053, fabric_gates=3, dfs_visits/chain=6) ---
+61:--- 4-hop (e2e=1543, fabric_gates=4, dfs_visits/chain=8) ---
+86:===== Part A: e2e by ablation (net) =====
+87:iso_mech = mechanism only (rdpkru/wrpkru); skip_iso = no enter/leave
+88:mode               1h       2h       3h       4h       d21      d32      d43
+89:full              294      661     1053     1543       367      392      490
+90:iso_mech          294      661     1053     1543       367      392      490
+91:skip_iso          196      441      735     1127       245      294      392
+97:===== Iso peel: C_mech / C_sw / C_total (cycles) =====
+98:C_mech = iso_mech - skip_iso;  C_sw = full - iso_mech;  C_total = full - skip_iso
+100:1-hop        98        0       98       98
+101:2-hop       220        0      220      220
+102:3-hop       318        0      318      318
+103:4-hop       416        0      416      416

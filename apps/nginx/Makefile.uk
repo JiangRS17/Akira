@@ -1,0 +1,6 @@
+$(eval $(call addlib,appnginx))
+CFLAGS-y += -Wno-error=pointer-arith
+CFLAGS-y += -Wno-error=attributes
+APPNGINX_SRCS-y += $(APPNGINX_BASE)/helper/fabric_init.c
+APPNGINX_SRCS-y += $(APPNGINX_BASE)/helper/register_all.c
+APPNGINX_CINCLUDES-y += -I$(APPNGINX_BASE)/helper

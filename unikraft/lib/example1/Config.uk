@@ -1,0 +1,6 @@
+config LIBEXAMPLE1
+	bool "example1: extension overhead helper library 1"
+	default n
+	select LIBFLEXOS
+	help
+	  Provide a minimal isolated function used as an extra Fabric domain node.

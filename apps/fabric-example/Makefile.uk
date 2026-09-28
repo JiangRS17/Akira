@@ -1,0 +1,7 @@
+$(eval $(call addlib,appfabricexample))
+APPFABRICEXAMPLE_SRCS-y += $(APPFABRICEXAMPLE_BASE)/main.c
+LDFLAGS-y += -Wl,--defsym=_fabric_comp1_fabric_2_data_start=0x1b4348 -Wl,--defsym=_fabric_comp1_fabric_2_data_end=0x1b434c -Wl,--defsym=_fabric_comp1_fabric_2_bss_start=0x0 -Wl,--defsym=_fabric_comp1_fabric_2_bss_end=0x0 -Wl,--defsym=_fabric_comp1_fabric_2_text_start=0x0 -Wl,--defsym=_fabric_comp1_fabric_2_text_end=0x0 -Wl,--defsym=_fabric_comp1_fabric_3_data_start=0x0 -Wl,--defsym=_fabric_comp1_fabric_3_data_end=0x0 -Wl,--defsym=_fabric_comp1_fabric_3_bss_start=0x0 -Wl,--defsym=_fabric_comp1_fabric_3_bss_end=0x0 -Wl,--defsym=_fabric_comp1_fabric_3_text_start=0x0 -Wl,--defsym=_fabric_comp1_fabric_3_text_end=0x0 
+APPFABRICEXAMPLE_SRCS-y += $(APPFABRICEXAMPLE_BASE)/helper/fabric_init.c
+APPFABRICEXAMPLE_SRCS-y += $(APPFABRICEXAMPLE_BASE)/helper/register_all.c
+APPFABRICEXAMPLE_CINCLUDES-y += -I$(APPFABRICEXAMPLE_BASE)/helper
+LDFLAGS-y += -Wl,--defsym=_fabric_comp1_fabric_2_data_start=0x1b4348 -Wl,--defsym=_fabric_comp1_fabric_2_data_end=0x1b434c -Wl,--defsym=_fabric_comp1_fabric_2_bss_start=0x0 -Wl,--defsym=_fabric_comp1_fabric_2_bss_end=0x0 -Wl,--defsym=_fabric_comp1_fabric_2_text_start=0x0 -Wl,--defsym=_fabric_comp1_fabric_2_text_end=0x0 -Wl,--defsym=_fabric_comp1_fabric_3_data_start=0x0 -Wl,--defsym=_fabric_comp1_fabric_3_data_end=0x0 -Wl,--defsym=_fabric_comp1_fabric_3_bss_start=0x0 -Wl,--defsym=_fabric_comp1_fabric_3_bss_end=0x0 -Wl,--defsym=_fabric_comp1_fabric_3_text_start=0x0 -Wl,--defsym=_fabric_comp1_fabric_3_text_end=0x0 

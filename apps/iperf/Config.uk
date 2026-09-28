@@ -1,0 +1,7 @@
+### Invisible option for dependencies
+config APPIPERF_DEPENDENCIES
+	bool
+	default y
+	select LIBFLEXOS
+	select LIBNEWLIBC
+	select LIBIPERF

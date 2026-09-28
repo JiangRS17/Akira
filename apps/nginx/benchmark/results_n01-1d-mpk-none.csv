@@ -1,0 +1,16 @@
+TASKID,CONFIG_ID,DOMAINS,BACKEND,SPLIT,HARDENING,CHUNK,ITERATION,METHOD,VALUE
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,1,REQ,220.33
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,2,REQ,159.12
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,3,REQ,117.64
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,4,REQ,144.99
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,5,REQ,98.92
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,1,REQ,305.58
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,2,REQ,304.67
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,3,REQ,209.77
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,4,REQ,214.53
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,5,REQ,230.90
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,1,REQ,206.62
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,2,REQ,189.60
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,3,REQ,190.01
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,4,REQ,157.61
+nginx-n01-1d-mpk-none,n01-1d-mpk-none,1,mpk,monolith,none,0,5,REQ,158.29

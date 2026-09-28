@@ -1,0 +1,6 @@
+$(eval $(call addlib,appscalability))
+# Service mapping table size vs fabric_gate overhead
+APPSCALABILITY_SRCS-y += $(APPSCALABILITY_BASE)/bench_map.c
+APPSCALABILITY_SRCS-y += $(APPSCALABILITY_BASE)/helper/scale_topo.c
+APPSCALABILITY_CINCLUDES-y += -I$(APPSCALABILITY_BASE)/helper
+APPSCALABILITY_CINCLUDES-y += -I$(UK_BASE)/lib/fabric-core/overhead/include

@@ -1,0 +1,57 @@
+---
+specification: '0.6'
+name: extension-overhead
+unikraft:
+  version: 698f1aa
+  kconfig:
+    - CONFIG_LIBFLEXOS=y
+    - CONFIG_LIBVFSCORE_AUTOMOUNT_ROOTFS=y
+    - CONFIG_LIBVFSCORE_ROOTFS_RAMFS=y
+    - CONFIG_LIBFABRICCORE=y
+targets:
+  - architecture: x86_64
+    platform: kvm
+compartments:
+  - name: comp1
+    mechanism:
+      driver: intel-pku
+      noisolstack: false
+    default: true
+libraries:
+  example1:
+    is_core: true
+    compartment: comp1
+  example2:
+    is_core: true
+    compartment: comp1
+  example3:
+    is_core: true
+    compartment: comp1
+  example4:
+    is_core: true
+    compartment: comp1
+  example5:
+    is_core: true
+    compartment: comp1
+  example6:
+    is_core: true
+    compartment: comp1
+  example7:
+    is_core: true
+    compartment: comp1
+  example8:
+    is_core: true
+    compartment: comp1
+  tlsf:
+    version: 26e4c90
+    kconfig:
+      - CONFIG_LIBTLSF=y
+    compartment: comp1
+  newlib:
+    version: 2df63fd
+    kconfig:
+      - CONFIG_LIBNEWLIBC=y
+      - CONFIG_LIBNEWLIBM=y
+    compartment: comp1
+volumes: {}
+networks: {}

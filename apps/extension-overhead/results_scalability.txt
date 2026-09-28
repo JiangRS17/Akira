@@ -1,0 +1,5 @@
+bench,domains,fabrics,empty_cycles,net_cycles
+G0,1,2,49,294
+G1,2,3,49,343
+G2,4,5,49,441
+G3,8,9,49,637

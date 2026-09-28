@@ -1,0 +1,65 @@
+specification: '0.6'
+name: redis
+unikraft:
+  version: 698f1aa
+  kconfig:
+  - CONFIG_LIBUK9P=n
+  - CONFIG_LIB9PFS=n
+  - CONFIG_LIBDEVFS=y
+  - CONFIG_LIBDEVFS_AUTOMOUNT=y
+  - CONFIG_LIBVFSCORE_AUTOMOUNT_ROOTFS=y
+  - CONFIG_LIBVFSCORE_ROOTFS_RAMFS=y
+  - CONFIG_LIBUKLIBPARAM=y
+  - CONFIG_LIBUKDEBUG=y
+  - CONFIG_LIBUKALLOC=y
+  - CONFIG_LIBUKSCHED=y
+  - CONFIG_LIBPOSIX_SYSINFO=y
+  - CONFIG_LIBPOSIX_LIBDL=y
+  - CONFIG_LIBFLEXOS=y
+  - CONFIG_LIBFABRICCORE=y
+  - CONFIG_OPTIMIZE_PERF=y
+targets:
+- architecture: x86_64
+  platform: kvm
+compartments:
+- name: comp1
+  mechanism:
+    driver: vmept
+    noisolstack: false
+  default: true
+- name: comp2
+  mechanism:
+    driver: vmept
+    noisolstack: true
+libraries:
+  tlsf:
+    version: 26e4c90
+    kconfig:
+    - CONFIG_LIBTLSF=y
+    compartment: comp1
+  pthread-embedded:
+    version: dc677a0
+    compartment: comp1
+  newlib:
+    version: 2df63fd
+    kconfig:
+    - CONFIG_LIBNEWLIBC=y
+    - CONFIG_LIBNEWLIBC_WANT_IO_C99_FORMATS=y
+    - CONFIG_LIBNEWLIBC_LINUX_ERRNO_EXTENSIONS=y
+    compartment: comp1
+  lwip:
+    version: 03d12cb
+    kconfig:
+    - CONFIG_LWIP_IPV6=y
+    compartment: comp2
+  redis:
+    version: dd90594
+    kconfig:
+    - CONFIG_LIBREDIS_SERVER=y
+    - CONFIG_LIBREDIS_COMMON=y
+    - CONFIG_LIBREDIS_LIBREDIS_LUA=y
+    - CONFIG_LIBREDIS_SERVER_MAIN_FUNCTION=y
+    compartment: comp1
+volumes: {}
+networks: {}
+arguments: console=ttyS0

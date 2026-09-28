@@ -1,0 +1,10 @@
+99:note: e2e min often cannot resolve C_sw; see Part C microbench for C_sw vs C_mech
+106:===== Part C: iso path microbench (min/median) =====
+107:sw_only = check+lookup (no wrpkru); mech_only = rdpkru/wrpkru; full_path = both
+109:sw_only     min=       6  median=       7
+110:mech_only   min=      94  median=      94
+111:full_path   min=      92  median=      92
+113:----- Part C peel (median; cycles) -----
+114:C_sw=sw_only  C_mech=mech_only  C_total=full_path  sum=C_sw+C_mech
+115:C_sw=7  C_mech=94  C_total=92  sum=101  sw%=7  mech%=102
+116:(min) C_sw=6  C_mech=94  C_total=92  sum=100

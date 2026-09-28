@@ -1,0 +1,17 @@
+Part D — Privilege Switch (estimated)
+
+Measured fabric bus (Unikraft, empty leaf, batch×64, SKIP_ISO):
+  case1_all_direct   = 5
+  case2_akira bus    = 270   (1× fabric)
+  case3_all_message  = 522   (2× fabric)
+
+SoftBus Privilege iso increment:
+  C_priv = geomean(ps_cross − none_cross) ≈ 534 cycles / fabric hop
+
+Estimated Privilege Switch totals:
+  case1 = 5
+  case2 = 270 + 534     = 804
+  case3 = 522 + 2×534   = 1590
+
+Akira extra vs direct   = 799
+All-msg extra vs Akira  = 786   (≈ second fabric + second priv hop)

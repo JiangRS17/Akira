@@ -1,0 +1,20 @@
+# FlexOS 风格：隔离应用（redis）
+isolation:
+  backend: ept
+
+comp1:
+  fabrics:
+    fabric-1:
+      libs:
+        - fabric-core
+        - flexos-core
+        - newlib
+        - tlsf
+        - pthread-embedded
+        - lwip
+    fabric-2:
+      default: true
+      libs:
+        - redis
+  edges:
+    - [fabric-1, fabric-2]

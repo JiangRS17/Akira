@@ -1,0 +1,27 @@
+# n05 | 2 domains | nginx+newlib | uksched+lwip | harden: nginx only
+# 画法: [nginx+newlib] — [uksched+lwip]
+#       harden ● nginx ○ newlib ○ uksched ○ lwip
+isolation:
+  backend: ept
+
+hardening:
+  - nginx
+
+comp1:
+  fabrics:
+    fabric-1:
+      default: true
+      libs:
+        - fabric-core
+        - flexos-core
+        - nginx
+        - newlib
+        - tlsf
+        - pthread-embedded
+    fabric-2:
+      libs:
+        - uksched
+        - ukschedcoop
+        - lwip
+  edges:
+    - [fabric-1, fabric-2]

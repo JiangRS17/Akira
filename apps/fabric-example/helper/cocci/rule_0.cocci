@@ -1,0 +1,30 @@
+// Auto-generated for /root/.unikraft_akira/apps/fabric-example/main.c
+
+@noreturn_0@
+expression list EL;
+expression COMP_FROM, COMP_TO;
+@@
+- flexos_nop_gate(COMP_FROM, COMP_TO, example2_empty, EL)
++ fabric_gate(0, example2_empty, EL)
+
+@return_0@
+expression list EL;
+expression COMP_FROM, COMP_TO, RET;
+@@
+- flexos_nop_gate_r(COMP_FROM, COMP_TO, RET, example2_empty, EL)
++ fabric_gate_r(0, RET, example2_empty, EL)
+
+@noreturn_1@
+expression list EL;
+expression COMP_FROM, COMP_TO;
+@@
+- flexos_nop_gate(COMP_FROM, COMP_TO, example3_empty, EL)
++ fabric_gate(0, example3_empty, EL)
+
+@return_1@
+expression list EL;
+expression COMP_FROM, COMP_TO, RET;
+@@
+- flexos_nop_gate_r(COMP_FROM, COMP_TO, RET, example3_empty, EL)
++ fabric_gate_r(0, RET, example3_empty, EL)
+

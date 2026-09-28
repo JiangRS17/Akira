@@ -1,0 +1,11 @@
+isolation:
+  backend: mpk
+
+comp1:
+  fabrics:
+    fabric-0:
+      default: true
+      libs:
+        - fabric-core
+        - flexos-core
+  edges: []

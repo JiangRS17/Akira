@@ -1,0 +1,10 @@
+config APPBASEOVERHEAD_DEPENDENCIES
+	bool
+	default y
+	select LIBFLEXOS
+	select LIBNEWLIBC
+	select LIBEXAMPLE1
+	select LIBEXAMPLE2
+	select LIBEXAMPLE3
+	select LIBEXAMPLE4
+	select LIBEXAMPLE5

@@ -1,0 +1,3 @@
+menuconfig LIBIPERF
+    bool "libiperf: simple iperf library"
+    default n

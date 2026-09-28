@@ -1,0 +1,43 @@
+################################################################################
+# Library registration
+################################################################################
+$(eval $(call addlib_s,libfabriccore,$(CONFIG_LIBFABRICCORE)))
+
+################################################################################
+# Library includes
+################################################################################
+CINCLUDES-$(CONFIG_LIBFABRICCORE) += -I$(LIBFABRICCORE_BASE)/include/
+CINCLUDES-$(CONFIG_LIBFABRICCORE) += -I$(LIBFABRICCORE_BASE)/arbiter/include/
+CINCLUDES-$(CONFIG_LIBFABRICCORE) += -I$(LIBFABRICCORE_BASE)/backends/include/
+CINCLUDES-$(CONFIG_LIBFABRICCORE) += -I$(LIBFABRICCORE_BASE)/bridge/include/
+CINCLUDES-$(CONFIG_LIBFABRICCORE) += -I$(LIBFABRICCORE_BASE)/component/include/
+CINCLUDES-$(CONFIG_LIBFABRICCORE) += -I$(LIBFABRICCORE_BASE)/controller/include/
+CINCLUDES-$(CONFIG_LIBFABRICCORE) += -I$(LIBFABRICCORE_BASE)/fabric/include/
+CINCLUDES-$(CONFIG_LIBFABRICCORE) += -I$(LIBFABRICCORE_BASE)/map/include/
+CINCLUDES-$(CONFIG_LIBFABRICCORE) += -I$(LIBFABRICCORE_BASE)/message/include/
+CINCLUDES-$(CONFIG_LIBFABRICCORE) += -I$(LIBFABRICCORE_BASE)/queue/include/
+CINCLUDES-$(CONFIG_LIBFABRICCORE) += -I$(LIBFABRICCORE_BASE)/overhead/include/
+
+################################################################################
+# Source files
+################################################################################
+# LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/main.c
+LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/overhead/overhead.c
+LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/arbiter/arbiter.c
+LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/backends/backends.c
+LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/backends/ept_backends.c
+LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/backends/mpk_backend.c
+LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/backends/software_backends.c
+LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/bridge/bridge.c
+LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/component/component.c
+LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/controller/controller.c
+LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/fabric/fabric.c
+LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/include/isolation.c
+LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/map/map.c
+LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/message/message.c
+LIBFABRICCORE_SRCS-y += $(LIBFABRICCORE_BASE)/queue/queue.c
+
+################################################################################
+# Compiler flags
+################################################################################
+LIBFABRICCORE_CFLAGS-y += -Wno-unused-parameter

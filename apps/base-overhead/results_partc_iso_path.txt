@@ -1,0 +1,116 @@
+c[?7l[2J[0mSeaBIOS (version 1.12.0-1)
+
+
+iPXE (http://ipxe.org) 00:03.0 C980 PCI2.10 PnP PMM+07F8FF90+07ECFF90 C980
+Press Ctrl-B to configure iPXE (PCI 00:03.0)...                                                                               
+
+
+Booting from ROM..[    0.000000] ERR:  [libkvmplat] <mm.c @  190> paddr_start is 0x00400000
+[AKIRA-MPK] init bridge 0 fabric_key=2
+[AKIRA-MPK] init bridge 1 fabric_key=3
+[AKIRA-MPK] init bridge 2 fabric_key=4
+[AKIRA-MPK] init bridge 3 fabric_key=5
+[AKIRA-MPK] init bridge 4 fabric_key=6
+[AKIRA-MPK] skip page tagging (ablation / shared sections)
+===== cross_domain Part B (per-phase by hop) =====
+Phase cycles are inflated by nested RDTSC; use % and
+dfs_visits (exact) to see what grows with hop count.
+
+timer baseline: 49
+
+===== end-to-end (Part A style, for reference) =====
+hop  e2e_net   delta(n-(n-1))
+1         318        318
+2         661        343
+3        1053        392
+4        1543        490
+
+===== Part B: avg cycles per chain invocation =====
+(totals / 100000 reps; nested RDTSC tax included)
+
+--- 1-hop (e2e=318, fabric_gates=1, dfs_visits/chain=2) ---
+  gate_build           65    9%
+  route(DFS)          213   30%
+  iso_enter            99   14%
+  arbiter             109   15%
+  map_lookup           56    8%
+  callee               57    8%
+  iso_leave            92   13%
+  sum(phases)         691
+
+--- 2-hop (e2e=661, fabric_gates=2, dfs_visits/chain=4) ---
+  gate_build          122    4%
+  route(DFS)          398   15%
+  iso_enter           199    7%
+  arbiter             221    8%
+  map_lookup          110    4%
+  callee             1297   51%
+  iso_leave           184    7%
+  sum(phases)        2531
+
+--- 3-hop (e2e=1053, fabric_gates=3, dfs_visits/chain=6) ---
+  gate_build          180    3%
+  route(DFS)          599   10%
+  iso_enter           299    5%
+  arbiter             332    5%
+  map_lookup          166    2%
+  callee             3757   66%
+  iso_leave           279    4%
+  sum(phases)        5612
+
+--- 4-hop (e2e=1543, fabric_gates=4, dfs_visits/chain=8) ---
+  gate_build          236    2%
+  route(DFS)          799    8%
+  iso_enter           398    4%
+  arbiter             444    4%
+  map_lookup          221    2%
+  callee             7422   75%
+  iso_leave           371    3%
+  sum(phases)        9891
+
+===== Marginal phase delta: hop(n) - hop(n-1) =====
+                2-1        3-2        4-3
+gate_build         57         58         56
+route(DFS)        185        201        200
+iso_enter         100        100         99
+arbiter           112        111        112
+map_lookup         54         56         55
+callee           1240       2460       3665
+iso_leave          92         95         92
+dfs_visits          2          2          2
+
+If dfs_visits marginal grows (e.g. 2,3,4,...), bidi DFS
+is exploring upstream before the next hop — that explains
+why delta is >~T(1) and rises with depth.
+
+===== Part A: e2e by ablation (net) =====
+iso_mech = mechanism only (rdpkru/wrpkru); skip_iso = no enter/leave
+mode               1h       2h       3h       4h       d21      d32      d43
+full              318      661     1053     1543       343      392      490
+iso_mech          318      661     1053     1543       343      392      490
+skip_iso          196      465      759     1127       269      294      368
+skip_arb          294      637     1029     1445       343      392      416
+no_map            294      637     1053     1519       343      416      466
+no_iso+map        196      441      735     1029       245      294      294
+bare              196      416      686     1053       220      270      367
+
+===== Iso peel: C_mech / C_sw / C_total (cycles) =====
+C_mech = iso_mech - skip_iso;  C_sw = full - iso_mech;  C_total = full - skip_iso
+note: e2e min often cannot resolve C_sw; see Part C microbench for C_sw vs C_mech
+hop      C_mech     C_sw  C_total  sum_chk
+1-hop       122        0      122      122
+2-hop       196        0      196      196
+3-hop       294        0      294      294
+4-hop       416        0      416      416
+
+===== Part C: iso path microbench (min/median) =====
+sw_only = check+lookup (no wrpkru); mech_only = rdpkru/wrpkru; full_path = both
+each sample = 64 iters in one timed window, report per-iter cycles (no empty subtract)
+sw_only     min=       6  median=       7
+mech_only   min=      94  median=      94
+full_path   min=      92  median=      92
+
+----- Part C peel (median; cycles) -----
+C_sw=sw_only  C_mech=mech_only  C_total=full_path  sum=C_sw+C_mech
+C_sw=7  C_mech=94  C_total=92  sum=101  sw%=7  mech%=102
+(min) C_sw=6  C_mech=94  C_total=92  sum=100

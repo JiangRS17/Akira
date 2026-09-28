@@ -1,0 +1,74 @@
+# Nginx 隔间数量 × 软件加固 吞吐量测试矩阵（与 plot_n01_n07 画法一致）
+#
+# 四组件: nginx | newlib | uksched | lwip
+# 同色 = 同一 domain；● = 对该库软件加固，○ = 不加固
+#
+# id   domains  布局(谁和谁同域)                         harden
+# ---- -------- ---------------------------------------- --------------------------
+# n01  1        [nginx+newlib+uksched+lwip]              ∅
+# n02  2        [nginx+newlib] | [uksched+lwip]          nginx,newlib,uksched,lwip
+# n03  3        [nginx+newlib] | [uksched] | [lwip]      ∅
+# n04  3        [nginx+newlib] | [uksched] | [lwip]      nginx
+# n05  2        [nginx+newlib] | [uksched+lwip]          nginx
+# n06  2        [nginx+newlib] | [uksched+lwip]          nginx,uksched,lwip
+# n07  2        [nginx+newlib] | [uksched+lwip]          nginx,newlib,uksched,lwip
+#               （与 n02 布局+加固相同，复测）
+#
+# isolation.backend=ept：硬件隔间用 VMEPT；布局/加固与上表一致（原 MPK 矩阵同构）。
+
+configs:
+  - id: n01-1d-mpk-none
+    taskid: nginx-n01-1d-mpk-none
+    domains: 1
+    backend: ept
+    split: monolith
+    hardening: none
+    description: "1 domain：四组件同域；无软件加固（基线）"
+
+  - id: n02-2d-all-harden
+    taskid: nginx-n02-2d-all-harden
+    domains: 2
+    backend: ept
+    split: nginx-newlib|uksched-lwip
+    hardening: nginx,newlib,uksched,lwip
+    description: "2 domain：nginx+newlib | uksched+lwip；四组件全加固"
+
+  - id: n03-3d-none
+    taskid: nginx-n03-3d-none
+    domains: 3
+    backend: ept
+    split: nginx-newlib|uksched|lwip
+    hardening: none
+    description: "3 domain：nginx+newlib | uksched | lwip；无软件加固"
+
+  - id: n04-3d-nginx-harden
+    taskid: nginx-n04-3d-nginx-harden
+    domains: 3
+    backend: ept
+    split: nginx-newlib|uksched|lwip
+    hardening: nginx
+    description: "3 domain：nginx+newlib | uksched | lwip；仅 nginx 加固"
+
+  - id: n05-2d-nginx-harden
+    taskid: nginx-n05-2d-nginx-harden
+    domains: 2
+    backend: ept
+    split: nginx-newlib|uksched-lwip
+    hardening: nginx
+    description: "2 domain：nginx+newlib | uksched+lwip；仅 nginx 加固"
+
+  - id: n06-2d-3harden
+    taskid: nginx-n06-2d-3harden
+    domains: 2
+    backend: ept
+    split: nginx-newlib|uksched-lwip
+    hardening: nginx,uksched,lwip
+    description: "2 domain：nginx+newlib | uksched+lwip；加固 nginx+uksched+lwip（不含 newlib）"
+
+  - id: n07-2d-all-harden
+    taskid: nginx-n07-2d-all-harden
+    domains: 2
+    backend: ept
+    split: nginx-newlib|uksched-lwip
+    hardening: nginx,newlib,uksched,lwip
+    description: "2 domain：nginx+newlib | uksched+lwip；四组件全加固（同 n02 复测）"

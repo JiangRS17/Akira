@@ -1,0 +1,16 @@
+// 模板：将 flexos_nop_gate 替换为 fabric_gate（跨 fabric 调用）
+// 占位符：{{ rule_nr }}, {{ fname }}, {{ src_fabric_id }}
+
+@noreturn_{{ rule_nr }}@
+expression list EL;
+expression COMP_FROM, COMP_TO;
+@@
+- flexos_nop_gate(COMP_FROM, COMP_TO, {{ fname }}, EL)
++ fabric_gate({{ src_fabric_id }}, {{ fname }}, EL)
+
+@return_{{ rule_nr }}@
+expression list EL;
+expression COMP_FROM, COMP_TO, RET;
+@@
+- flexos_nop_gate_r(COMP_FROM, COMP_TO, RET, {{ fname }}, EL)
++ fabric_gate_r({{ src_fabric_id }}, RET, {{ fname }}, EL)

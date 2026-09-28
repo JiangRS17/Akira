@@ -1,0 +1,13 @@
+===== Part D: direct vs hybrid vs all-message =====
+lib1=app  lib2=example2  lib3=example3
+leaf=example3_empty; batch=64, no timer subtract
+case1: all direct calls
+case2: fabric(lib1→lib2) + direct(lib2→lib3)  [Akira]
+case3: fabric(lib1→lib2) + fabric(lib2→lib3)  [all message]
+case1_all_direct          5 cycles
+case2_akira             270 cycles
+case3_all_message       522 cycles
+
+Akira extra vs direct   = 265
+All-msg extra vs Akira  = 252
+All-msg extra vs direct = 517

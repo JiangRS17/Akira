@@ -1,0 +1,42 @@
+#!/bin/bash
+# Drop-in wget wrapper for Unikraft/kraft fetch steps.
+# Uses curl + SOCKS5 because GNU wget does not speak SOCKS and local
+# Clash/mihomo mixed ports are often SOCKS-only on 7890.
+
+REAL_WGET="/usr/bin/wget"
+PROXY="${UK_PROXY:-${ALL_PROXY:-socks5h://127.0.0.1:7890}}"
+
+if [ -n "${UK_NO_PROXY}" ] || [ -z "${PROXY}" ]; then
+	exec "${REAL_WGET}" "$@"
+fi
+
+args=("$@")
+output=""
+url=""
+while [ $# -gt 0 ]; do
+	case "$1" in
+	-O)
+		output="$2"
+		shift 2
+		;;
+	-O*)
+		output="${1#-O}"
+		shift
+		;;
+	-*)
+		shift
+		;;
+	*)
+		url="$1"
+		shift
+		;;
+	esac
+done
+
+if [ -z "${output}" ] || [ -z "${url}" ]; then
+	exec "${REAL_WGET}" "${args[@]}"
+fi
+
+exec curl --proxy "${PROXY}" -fsSL \
+	--connect-timeout 30 --retry 3 --retry-delay 2 \
+	-o "${output}" "${url}"

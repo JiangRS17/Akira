@@ -1,0 +1,20 @@
+# FlexOS 风格：隔离 lwip + 软件隔离后端
+isolation:
+  backend: software
+
+comp1:
+  fabrics:
+    fabric-1:
+      default: true
+      libs:
+        - fabric-core
+        - flexos-core
+        - redis
+        - newlib
+        - tlsf
+        - pthread-embedded
+    fabric-2:
+      libs:
+        - lwip
+  edges:
+    - [fabric-1, fabric-2]

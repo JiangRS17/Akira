@@ -1,0 +1,49 @@
+$(eval $(call addlib_s,libexample2,$(CONFIG_LIBEXAMPLE2)))
+
+CINCLUDES-$(CONFIG_LIBEXAMPLE2) += -I$(LIBEXAMPLE2_BASE)/include
+CXXINCLUDES-$(CONFIG_LIBEXAMPLE2) += -I$(LIBEXAMPLE2_BASE)/include
+
+LIBEXAMPLE2_SRCS-y += $(LIBEXAMPLE2_BASE)/example2.c
+LIBEXAMPLE2_LDFLAGS-y += -Wl,-T,$(LIBEXAMPLE2_BASE)/flexos_extra.ld  # 已禁用：由 fabric linker script 替代
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+# Redis 隔间数量 × 软件加固 吞吐量测试矩阵
+
+configs:
+  - id: r01-1d-mpk-none
+    taskid: redis-r01-1d-mpk-none
+    domains: 1
+    backend: ept
+    split: monolith
+    hardening: none
+    description: "1 domain MPK，无软件加固"
+
+  - id: r02-2d-all-harden
+    taskid: redis-r02-2d-all-harden
+    domains: 2
+    backend: ept
+    split: redis-newlib|uksched-lwip
+    hardening: redis,newlib,uksched,lwip
+    description: "2 domain，4 组件全部软件加固"
+
+  - id: r03-3d-none
+    taskid: redis-r03-3d-none
+    domains: 3
+    backend: ept
+    split: redis-newlib|uksched|lwip
+    hardening: none
+    description: "3 domain，无软件加固"
+
+  - id: r04-3d-redis-harden
+    taskid: redis-r04-3d-redis-harden
+    domains: 3
+    backend: ept
+    split: redis-newlib|uksched|lwip
+    hardening: redis
+    description: "3 domain，仅 Redis 软件加固"
+
+  - id: r05-2d-redis-harden
+    taskid: redis-r05-2d-redis-harden
+    domains: 2
+    backend: ept
+    split: redis-newlib|uksched-lwip
+    hardening: redis
+    description: "2 domain，仅 Redis 软件加固"
+
+  - id: r06-2d-3harden
+    taskid: redis-r06-2d-3harden
+    domains: 2
+    backend: ept
+    split: redis-newlib|uksched-lwip
+    hardening: redis,uksched,lwip
+    description: "2 domain，Redis+uksched+lwip 软件加固"
+
+  - id: r07-2d-all-harden
+    taskid: redis-r07-2d-all-harden
+    domains: 2
+    backend: ept
+    split: redis-newlib|uksched-lwip
+    hardening: redis,newlib,uksched,lwip
+    description: "2 domain，4 组件全部软件加固"

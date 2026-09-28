@@ -1,0 +1,29 @@
+# (4) 3 domains: (redis+newlib) | (uksched) | (lwip), Redis hardened only
+isolation:
+  backend: ept
+
+hardening:
+  - redis
+
+comp1:
+  fabrics:
+    fabric-1:
+      default: true
+      libs:
+        - fabric-core
+        - flexos-core
+        - redis
+        - newlib
+        - tlsf
+        - pthread-embedded
+    fabric-2:
+      libs:
+        - uksched
+        - ukschedcoop
+    fabric-3:
+      libs:
+        - lwip
+  edges:
+    - [fabric-1, fabric-2]
+    - [fabric-1, fabric-3]
+    - [fabric-2, fabric-3]

@@ -1,0 +1,23 @@
+# 构建产物
+**/build/
+**/builds/
+**/__pycache__/
+*.pyc
+
+# kraft 本地配置（可重新生成）
+**/.config
+
+# 嵌套 git 仓库的元数据
+**/.git/
+
+# 编辑器 / 系统
+.vscode/
+*.swp
+.DS_Store
+
+# cscope 索引
+cscope.files
+cscope.out
+
+# git bundle 备份
+*.bundle

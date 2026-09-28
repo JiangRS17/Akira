@@ -1,0 +1,2 @@
+$(eval $(call addlib,appflexosmicrobenchmarks))
+APPFLEXOSMICROBENCHMARKS_SRCS-y += $(APPFLEXOSMICROBENCHMARKS_BASE)/main.c

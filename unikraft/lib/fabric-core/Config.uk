@@ -1,0 +1,8 @@
+menuconfig LIBFABRICCORE
+    bool "fabric-core - Fabric soft-bus core library"
+    default n
+    select LIBFLEXOS
+    select LIBUKALLOC
+    select LIBUKSCHED
+    select LIBUKLOCK
+    select LIBUKLOCK_MUTEX

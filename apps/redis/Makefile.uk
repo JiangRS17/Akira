@@ -1,0 +1,8 @@
+$(eval $(call addlib,appredis))
+
+
+
+APPREDIS_SRCS-y += $(APPREDIS_BASE)/helper/fabric_init.c
+APPREDIS_SRCS-y += $(APPREDIS_BASE)/helper/register_all.c
+APPREDIS_CINCLUDES-y += -I$(APPREDIS_BASE)/helper
+LDFLAGS-y += -Wl,--defsym=_fabric_comp1_fabric_2_data_start=0x0 -Wl,--defsym=_fabric_comp1_fabric_2_data_end=0x0 -Wl,--defsym=_fabric_comp1_fabric_2_bss_start=0x0 -Wl,--defsym=_fabric_comp1_fabric_2_bss_end=0x0 -Wl,--defsym=_fabric_comp1_fabric_2_text_start=0x0 -Wl,--defsym=_fabric_comp1_fabric_2_text_end=0x0

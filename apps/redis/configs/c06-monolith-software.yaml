@@ -1,0 +1,16 @@
+# 单域 + 软件隔离后端（对比 MPK 开销）
+isolation:
+  backend: software
+
+comp1:
+  fabrics:
+    fabric-1:
+      default: true
+      libs:
+        - fabric-core
+        - flexos-core
+        - redis
+        - newlib
+        - tlsf
+        - pthread-embedded
+        - lwip

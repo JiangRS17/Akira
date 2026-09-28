@@ -1,0 +1,109 @@
+--- nginx-1.15.6/src/event/modules/ngx_select_module.c	2018-11-06 13:32:09.000000000 +0000
++++ nginx-1.15.6/src/event/modules/ngx_select_module.c	2026-07-23 04:56:46.010553444 +0000
+@@ -9,6 +9,20 @@
+ #include <ngx_core.h>
+ #include <ngx_event.h>
+ 
++#include <flexos/isolation.h>
++#include <uk/sched.h>
++#include <uk/arch/time.h>
++
++static inline int getsockopt_wrapper(int sockfd, int level, int optname, void *optval, socklen_t *optlen)
++{
++	int ret;
++	flexos_vmept_gate_r(FLEXOS_VMEPT_APPCOMP, FLEXOS_VMEPT_LWIP_COMP, ret, getsockopt, sockfd, level, optname,
++			    optval, optlen);
++	return ret;
++}
++
++#define getsockopt(...) getsockopt_wrapper(__VA_ARGS__)
++
+ 
+ static ngx_int_t ngx_select_init(ngx_cycle_t *cycle, ngx_msec_t timer);
+ static void ngx_select_done(ngx_cycle_t *cycle);
+@@ -22,10 +36,14 @@
+ static char *ngx_select_init_conf(ngx_cycle_t *cycle, void *conf);
+ 
+ 
+-static fd_set         master_read_fd_set;
+-static fd_set         master_write_fd_set;
+-static fd_set         work_read_fd_set;
+-static fd_set         work_write_fd_set;
++static fd_set         master_read_fd_set __attribute__((section(".data_shared")));
++static fd_set         master_write_fd_set __attribute__((section(".data_shared")));
++
++static fd_set         work_read_fd_set __attribute__((section(".data_shared")));
++
++static fd_set         work_write_fd_set __attribute__((section(".data_shared")));
++
++static struct timeval ngx_ept_select_tv __attribute__((section(".data_shared")));
+ 
+ static ngx_int_t      max_fd;
+ static ngx_uint_t     nevents;
+@@ -216,7 +234,9 @@
+     ngx_uint_t         i, found;
+     ngx_event_t       *ev;
+     ngx_queue_t       *queue;
+-    struct timeval     tv, *tp;
++
++    struct timeval     tv;
++    struct timeval     *tp;
+     ngx_connection_t  *c;
+ 
+     if (max_fd == -1) {
+@@ -257,10 +277,52 @@
+     ngx_log_debug1(NGX_LOG_DEBUG_EVENT, cycle->log, 0,
+                    "select timer: %M", timer);
+ 
+-    work_read_fd_set = master_read_fd_set;
+-    work_write_fd_set = master_write_fd_set;
++    /*
++     * VMEPT: Comp1 select is non-blocking (selscan only). Sleep on Comp0 so
++     * the Comp1 RPC thread is never held across a wait — that deadlocked wrk.
++     * Also rate-limit sticky ready>0 (level-trigger spin after close/FIN).
++     */
++    {
++        ngx_msec_t         remaining = timer;
++        ngx_msec_t         slice;
++        static unsigned    ready_streak;
++
++        for (;;) {
++            work_read_fd_set = master_read_fd_set;
++            work_write_fd_set = master_write_fd_set;
++
++            ngx_ept_select_tv.tv_sec = 0;
++            ngx_ept_select_tv.tv_usec = 0;
++
++            flexos_vmept_gate_r(FLEXOS_VMEPT_APPCOMP, FLEXOS_VMEPT_LWIP_COMP, ready, select, max_fd + 1,
++                               &work_read_fd_set, &work_write_fd_set, NULL,
++                               &ngx_ept_select_tv);
++
++            if (ready != 0) {
++                if (++ready_streak > 32) {
++                    uk_sched_thread_sleep(ukarch_time_msec_to_nsec(1));
++                    ready_streak = 0;
++                }
++                break;
++            }
++
++            ready_streak = 0;
++
++            if (timer != NGX_TIMER_INFINITE) {
++                if (remaining == 0) {
++                    break;
++                }
++                slice = (remaining < 5) ? remaining : 5;
++                remaining -= slice;
++            } else {
++                slice = 5;
++            }
++
++            uk_sched_thread_sleep(ukarch_time_msec_to_nsec(slice));
++        }
++    }
+ 
+-    ready = select(max_fd + 1, &work_read_fd_set, &work_write_fd_set, NULL, tp);
++    (void) tp;
+ 
+     err = (ready == -1) ? ngx_errno : 0;
+ 

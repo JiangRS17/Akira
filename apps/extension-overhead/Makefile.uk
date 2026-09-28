@@ -1,0 +1,5 @@
+$(eval $(call addlib,appextensionoverhead))
+
+# Select G0 / G1 / G2 / G3 (override: make BENCH=G1 ...)
+BENCH ?= G3
+APPEXTENSIONOVERHEAD_SRCS-y += $(APPEXTENSIONOVERHEAD_BASE)/$(BENCH).c

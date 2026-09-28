@@ -1,0 +1,6 @@
+config APPSCALABILITY_DEPENDENCIES
+	bool
+	default y
+	select LIBFLEXOS
+	select LIBNEWLIBC
+	select LIBFABRICCORE

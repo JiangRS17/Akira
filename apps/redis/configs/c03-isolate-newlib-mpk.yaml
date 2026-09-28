@@ -1,0 +1,20 @@
+# FlexOS 风格：隔离 libc（newlib）
+isolation:
+  backend: ept
+
+comp1:
+  fabrics:
+    fabric-1:
+      default: true
+      libs:
+        - fabric-core
+        - flexos-core
+        - redis
+        - tlsf
+        - pthread-embedded
+        - lwip
+    fabric-2:
+      libs:
+        - newlib
+  edges:
+    - [fabric-1, fabric-2]

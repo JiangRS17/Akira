@@ -1,0 +1,15 @@
+$(eval $(call addlib_s,libexample5,$(CONFIG_LIBEXAMPLE5)))
+
+CINCLUDES-$(CONFIG_LIBEXAMPLE5) += -I$(LIBEXAMPLE5_BASE)/include
+CXXINCLUDES-$(CONFIG_LIBEXAMPLE5) += -I$(LIBEXAMPLE5_BASE)/include
+
+LIBEXAMPLE5_SRCS-y += $(LIBEXAMPLE5_BASE)/example5.c
+
+
+
+
+
+
+
+
+

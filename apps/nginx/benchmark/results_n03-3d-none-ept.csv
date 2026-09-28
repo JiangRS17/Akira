@@ -1,0 +1,6 @@
+TASKID,CONFIG_ID,DOMAINS,BACKEND,SPLIT,HARDENING,CHUNK,ITERATION,METHOD,VALUE
+nginx-n03-3d-none,n03-3d-none,3,ept,nginx-newlib|uksched|lwip,none,0,1,REQ,77.63
+nginx-n03-3d-none,n03-3d-none,3,ept,nginx-newlib|uksched|lwip,none,0,2,REQ,56.54
+nginx-n03-3d-none,n03-3d-none,3,ept,nginx-newlib|uksched|lwip,none,0,3,REQ,13.09
+nginx-n03-3d-none,n03-3d-none,3,ept,nginx-newlib|uksched|lwip,none,0,4,REQ,9.29
+nginx-n03-3d-none,n03-3d-none,3,ept,nginx-newlib|uksched|lwip,none,0,5,REQ,10.19

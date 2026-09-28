@@ -1,0 +1,23 @@
+# FlexOS 风格：3 compartments（app | lwip | newlib）
+isolation:
+  backend: ept
+
+comp1:
+  fabrics:
+    fabric-1:
+      default: true
+      libs:
+        - fabric-core
+        - flexos-core
+        - redis
+        - tlsf
+        - pthread-embedded
+    fabric-2:
+      libs:
+        - lwip
+    fabric-3:
+      libs:
+        - newlib
+  edges:
+    - [fabric-1, fabric-2]
+    - [fabric-1, fabric-3]

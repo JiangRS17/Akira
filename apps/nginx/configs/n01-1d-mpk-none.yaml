@@ -1,0 +1,19 @@
+# n01 | 1 domain | monolith | harden: none
+# 画法: [nginx + newlib + uksched + lwip] 全部同一域，无软件加固（基线）
+isolation:
+  backend: ept
+
+comp1:
+  fabrics:
+    fabric-1:
+      default: true
+      libs:
+        - fabric-core
+        - flexos-core
+        - nginx
+        - newlib
+        - uksched
+        - ukschedcoop
+        - tlsf
+        - pthread-embedded
+        - lwip
