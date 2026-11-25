@@ -116,17 +116,3 @@ Unikraft sources are under the BSD 3-clause license in [`unikraft/COPYING.md`](u
 
 Akira-specific code in this snapshot — `unikraft/lib/fabric-core`, `unikraft/fabric-support`, and the Fabric benchmark applications — is released under that same BSD 3-clause license.
 
-## Citation
-
-If you use this prototype, please cite:
-
-```bibtex
-@article{jiang2026akira,
-  author  = {Jiang, Renshuang and Dong, Pan and Wang, Yichong and Li, Lei and
-             Dong, Yuchen and Fang, Xiaoxiang and Yu, Qirui and Zhang, Jianfeng and
-             Jiang, Zhe},
-  title   = {Akira: Towards Operating System Architecture for Agile Specialization},
-  journal = {ACM Transactions on Embedded Computing Systems},
-  year    = {2026}
-}
-```
